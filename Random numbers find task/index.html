@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Guess The value</h1>
+    <input id="input">
+    <button onclick="change()">Check</button>
+    <p id="result"></p>
+    <p id="score">score:10</p>
+
+
+    <script>
+    var input=document.getElementById('input')
+    var result=document.getElementById('result')
+    var score=document.getElementById('score')
+    
+    var randomnum=   Math.floor(Math.random()*10)+1   //..incase u cannot find the random value ..u can fit the random value =9
+    var totalscore=10
+    
+    function change(){
+    var enter=input.value
+    
+    if(randomnum==enter){
+       
+        result.textContent="right"
+        alert('you are won')
+    }
+    else{
+        totalscore=totalscore-1
+        score.textContent= "score:"+totalscore
+        result.textContent="you are wrong"
+    }
+    }
+
+</script>
+</body>
+</html>

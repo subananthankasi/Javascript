@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form validation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container" style="text-align: center; margin-top: 5%;">
+
+        <div>
+            <label>Name:</label>
+            <input type="text" id="name">
+            <p id="error1" style="color: red;"></p>
+            
+        </div>
+        <div style="margin-top: 10px;">
+            <label>Age:</label>
+            <input type="number" id="age">
+            <p id="error2" style="color: red;"></p>
+        </div>
+        <div style="margin-top: 10px;">
+            <label>phone:</label>
+            <input type="number" id="phone">
+            <p id="error8" style="color: red;"></p>
+        </div>
+        <div>
+            <p>Gender :
+                <label>Male</label>
+                <input type="radio" id="male">
+                <label>Female</label>
+                <input type="radio" id="female">
+                <p id="error3" style="color: red;"></p>
+            </p>
+        </div>
+        <div>
+            <label>Course:</label>
+            <select id="course">
+                <option></option>
+                <option>Java</option>
+                <option>Python</option>
+                <option>Javascript</option>
+                <option>React</option>
+                <option>Node.js</option>
+            </select>
+            <p id="error4" style="color: red;"></p>
+            <div style="margin-top: 10px;">
+                <label>Email:</label>
+                <input type="email" id="email">
+                <p id="error5" style="color: red;"></p>
+            </div>
+        </div>
+        <button  onclick="submit()">Save</button>
+    </div>
+    <div>
+        <div class="container">
+            <table class="mx-auto text-center table  table-hover table-bordered bg-light">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Course</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+ function submit(){
+    //name
+   var name=document.getElementById("name").value;
+   var error1=document.getElementById("error1");
+    if(name==""){
+        error1.textContent="*required!!"
+      
+    }
+    else{
+        error1.textContent=""
+        console.log(name)
+    }
+    //Age
+    var age=document.getElementById("age").value;
+   var error2=document.getElementById("error2");
+    if(age==""){
+        error2.textContent="*required!!"
+     
+    }
+    else{
+        error2.textContent=""
+        console.log(age)
+    }
+    //phone
+    var phone=document.getElementById("phone").value;
+   var error8=document.getElementById("error8");
+    if(phone==""){
+        error8.textContent="*required!!"
+      
+    }
+    else if(phone.length != 10){
+        error8.textContent="*not 10!!"
+        console.log("not 10")
+    }
+    else{
+        error8.textContent=""
+        console.log(phone)
+    }
+    //course
+    var course=document.getElementById("course").value;
+   var error4=document.getElementById("error4");
+    if(course==""){
+        error4.textContent="*required!!"
+    
+    }
+    else{
+        error4.textContent=""
+        console.log(course)
+    }
+    //email
+    let pattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
+   var email=document.getElementById("email").value;
+   var error5=document.getElementById("error5");
+    if(email==""){
+        error5.textContent="*required!!"
+        
+    }
+    else if(!pattern.test(email)){
+        error5.textContent="*not value!!"
+    }
+    else{
+        error5.textContent=""
+        console.log(email)
+    }
+    //gender
+
+    var male=document.getElementById("male")
+    var female=document.getElementById("female")
+   var error3=document.getElementById('error3')
+    Gendervalue=""
+    genderchecked=false
+    if(male.checked){
+        genderchecked=true
+        Gendervalue="male"  
+        console.log(Gendervalue)
+       
+    }
+    else if(female.checked){
+        genderchecked=true
+        Gendervalue="female"
+        console.log(Gendervalue)
+    }
+if(genderchecked){
+    error3.textContent=""  
+}
+else{
+    error3.textContent="*required!"  
+}
+ 
+
+ var obj={
+   studentname:name,
+   studentage:age,
+   studentgender:Gendervalue,
+   studentemail:email,
+   studentcourse:course,
+ }
+ var store=[]
+ store.push(obj);
+ console.log(store);
+
+var list=JSON.stringify(store);
+localStorage.setItem("storage",list)
+ 
+function add(){
+
+ var details=localStorage.getItem("storage")
+ JSON.parse(details)
+
+ var body=document.getElementById('body')
+ var create =document.createElement('tr')
+
+  create.innerHTML =`<tr>
+    <td>${name}</td>
+    <td>${age}</td>
+    <td> ${Gendervalue}</td>
+    <td>${email}</td>
+    <td>${course}</td> 
+    <td> <button  onclick="deleted(event)" >Dlt</button></td></tr>  `  
+    body.append(create)
+   
+ }
+ add()
+ }
+ 
+
+//....................................................
+
+
+//.................................................................
+function deleted(event){
+    event.target.parentElement.parentElement.remove()
+}
+</script>
+</html>
+
